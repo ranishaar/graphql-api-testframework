@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "mocha": "^10.4.0"
+  },
+  "dependencies": {
+    "chai": "^5.1.0",
+    "graphql-request": "^6.1.0"
+  }
+}
