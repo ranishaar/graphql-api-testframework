@@ -1,4 +1,9 @@
 {
+  "name": "graphql-test-apiframework",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "mocha"
+  },
   "devDependencies": {
     "mocha": "^10.4.0"
   },
