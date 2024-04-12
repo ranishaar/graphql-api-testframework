@@ -1,18 +1,20 @@
-let chai;
-before(async () => {
-  chai = await import('chai');
-});
-const axios = require('axios');
-
-const { request, gql } = require('graphql-request');
+import { expect } from 'chai';
+import axios from 'axios';
+import fs from 'fs';
+import { request, gql } from 'graphql-request';
 
 const apiURL = 'https://graphql.bitquery.io';
-const apiKey = 'BQYzU9vO6Qn026LTYJHWILo5yv315SE9';
-const authorizationHeader = 'Bearer ory_at_gwuKBlXBVdL__nEJwRJ1_Npx8b1PUisa4qPuW46bRpk.4S4KyWY3d6-2eDc4p0Co9bkf8b5vhST-zBinxJwvwas';
 
-describe('TST-1000 Invalid Authorization', function () {// Test Suite including all tests related to authorization
-  it('TST-1001 IA Invalid Authorization Key', async function () {// Test case where authorization key in invalid
-    const query = `
+// Read the credentials file
+const apiCredentials = JSON.parse(fs.readFileSync('credentials.json'));
+
+// Access API key and authorization header from the configuration
+const apiKey = apiCredentials.apiKey;
+const authorizationHeader = apiCredentials.authorizationHeader;
+
+describe('TST-1000 API Authorization Tests', function () { // Suite for testing API authorization
+  it('TST-1001 A Invalid API Key', async function () { // Test to verify authorization fails with an invalid API key
+    const query = gql`
       {
         ethereum {
           transactions {
@@ -21,7 +23,7 @@ describe('TST-1000 Invalid Authorization', function () {// Test Suite including 
         }
       }
     `;
-    
+
     try {
       const response = await axios.post(apiURL, { query }, {
         headers: {
@@ -31,28 +33,31 @@ describe('TST-1000 Invalid Authorization', function () {// Test Suite including 
         },
       });
 
-      // Extract status and status text from the response object
-      const status = response.status;
-      const statusText = response.statusText;
-
-      // Print status and status text to the console
-      console.log('Response status:', status);
-      console.log('Response status text:', statusText);
+      // Extract and print status and status text to the console
+      console.log('Response status:', response.status);
+      console.log('Response status text:', response.statusText);
 
       // Assert when status code is not 200 (auth request failed)
-      chai.expect(response.status).equal(200);
+      expect(response.status).equal(200);
 
     } catch (error) {
-      console.error('Error:', error);
+
+      // If the error has a response object
+      if (error.response) {
+
+        // Print status and status text to the console
+        console.error('Error message:', error.message);
+        console.log('Response status:', error.response.status);
+        console.log('Response status text:', error.response.statusText);
+
+      }
       throw error; // Rethrow the error to indicate test failure
     }
-  }).timeout(5000);
+  }).timeout(5000); // Set timeout to 5000ms (5 seconds) because response sometimes was taking more than 2 seconds and failing test
 });
 
-
-
-describe('GET ETH data', function () { // Test suite to GET various coin objects
-  it('Return ETH failed transactions count', async function () {
+describe('TST-1100 Endpoint Response Model Schema Tests', function () { // Test suite for verifying the model schema of endpoint responses
+  it('TST-1101 EMS Verify ETH transactions response model schema', async function () { // Test to verify the model schema of the Ethereum transactions response
     const query = gql`
       {
          ethereum {
@@ -62,13 +67,45 @@ describe('GET ETH data', function () { // Test suite to GET various coin objects
            }
       }
     `;
-    
+
     try {
       const data = await request(apiURL, query, null, {
         'X-API-KEY': apiKey,
         'Authorization': authorizationHeader,
       });
-      
+      console.log('Model schema:', JSON.stringify(data, null, 2));
+
+      // Assert that the data follows the expected model schema
+      expect(data).to.have.property('ethereum').to.be.an('object');
+      expect(data.ethereum).to.have.property('transactions').to.be.an('array');
+      expect(data.ethereum.transactions[0]).to.have.property('count').to.be.a('number');
+
+    } catch (error) {
+      console.error('Error in first request:', JSON.stringify(error, null, 2));
+      throw error; // Rethrow the error to indicate test failure
+    }
+
+  }).timeout(5000);
+});
+
+describe('TST-1200 Coin Data Retrieval Tests', function () { // Test suite for retrieving coin data
+  it('TST-1201 CD Verify positive count of ETH failed transactions', async function () { // Test to retrieve the count of failed Ethereum transactions
+    const query = gql`
+      {
+         ethereum {
+             transactions {
+               count(success: false)
+             }
+           }
+      }
+    `;
+
+    try {
+      const data = await request(apiURL, query, null, {
+        'X-API-KEY': apiKey,
+        'Authorization': authorizationHeader,
+      });
+
       // Extract count value from the first transaction
       const transactions = data.ethereum.transactions;
       const count = transactions.length > 0 ? transactions[0].count : undefined;
@@ -76,13 +113,13 @@ describe('GET ETH data', function () { // Test suite to GET various coin objects
       console.log('ETH failed transactions count:', count);
 
       // Assert that count is a number and is greater than 0
-      chai.expect(count).to.exist;
-      chai.expect(count).to.be.a('number');
-      chai.expect(count).to.be.gte(0);
+      expect(count).to.exist;
+      expect(count).to.be.a('number');
+      expect(count).to.be.gte(0);
     } catch (error) {
       console.error('Error in first request:', JSON.stringify(error, null, 2));
       throw error; // Rethrow the error to indicate test failure
     }
 
-  }).timeout(5000); // Set timeout to 5000ms (5 seconds) because response sometimes was taking more than 2 seconds and failing test
+  }).timeout(5000);
 });
