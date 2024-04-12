@@ -5,9 +5,9 @@
     "passes": 3,
     "pending": 0,
     "failures": 0,
-    "start": "2024-04-12T08:04:09.966Z",
-    "end": "2024-04-12T08:04:11.129Z",
-    "duration": 1163,
+    "start": "2024-04-12T09:48:15.586Z",
+    "end": "2024-04-12T09:48:16.475Z",
+    "duration": 889,
     "testsRegistered": 3,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,7 +18,7 @@
   },
   "results": [
     {
-      "uuid": "d884beb1-f438-4b86-a25d-0cd35f4e2adf",
+      "uuid": "0e97f709-6615-43d1-923a-404ec0520472",
       "title": "",
       "fullFile": "",
       "file": "",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "8b8f97a5-e1bb-4029-a055-3c9dc0fcfc93",
+          "uuid": "a9bc19a1-947a-467d-8807-eaf4168ff709",
           "title": "TST-1000 API Authorization Tests",
           "fullFile": "C:\\graphql-api-testframework\\test\\graphql.test.js",
           "file": "\\test\\graphql.test.js",
@@ -38,35 +38,35 @@
               "title": "TST-1001 A Invalid API Key",
               "fullTitle": "TST-1000 API Authorization Tests TST-1001 A Invalid API Key",
               "timedOut": false,
-              "duration": 752,
+              "duration": 649,
               "state": "passed",
               "speed": "slow",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "// Test to verify authorization fails with an invalid API key\n    const query = gql`\n      {\n        ethereum {\n          transactions {\n            count(success: false)\n          }\n        }\n      }\n    `;\n    try {\n      const response = await axios.post(apiURL, { query }, {\n        headers: {\n          'X-API-KEY': apiKey, // set auth key as invalid string\n          'Authorization': authorizationHeader,\n          'Content-Type': 'application/json',\n        },\n      });\n      // Extract and print status and status text to the console\n      console.log('Response status:', response.status);\n      console.log('Response status text:', response.statusText);\n      // Assert when status code is not 200 (auth request failed)\n      expect(response.status).equal(200);\n    } catch (error) {\n      // If the error has a response object\n      if (error.response) {\n        // Print status and status text to the console\n        console.error('Error message:', error.message);\n        console.log('Response status:', error.response.status);\n        console.log('Response status text:', error.response.statusText);\n      }\n      throw error; // Rethrow the error to indicate test failure\n    }",
+              "code": "// Test to verify authorization fails with an invalid API key (Test is meant to fail because im passing incorrect apiKey)\n    const query = gql`\n      {\n        ethereum {\n          transactions {\n            count(success: false)\n          }\n        }\n      }\n    `;\n    try {\n      const response = await axios.post(apiURL, { query }, {\n        headers: {\n          'X-API-KEY': apiKey, // set auth key as invalid string\n          'Authorization': authorizationHeader,\n          'Content-Type': 'application/json',\n        },\n      });\n      // Extract and print status and status text to the console\n      console.log('Response status:', response.status);\n      console.log('Response status text:', response.statusText);\n      // Assert when status code is not 200 (auth request failed)\n      expect(response.status).equal(200);\n    } catch (error) {\n      // If the error has a response object\n      if (error.response) {\n        // Print status and status text to the console\n        console.error('Error message:', error.message);\n        console.log('Response status:', error.response.status);\n        console.log('Response status text:', error.response.statusText);\n      }\n      throw error; // Rethrow the error to indicate test failure\n    }",
               "err": {},
-              "uuid": "a5f31844-4b40-4149-8f76-5476cf497ed6",
-              "parentUUID": "8b8f97a5-e1bb-4029-a055-3c9dc0fcfc93",
+              "uuid": "d0375f06-f652-4adb-a34f-e5a2e1c14c48",
+              "parentUUID": "a9bc19a1-947a-467d-8807-eaf4168ff709",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "a5f31844-4b40-4149-8f76-5476cf497ed6"
+            "d0375f06-f652-4adb-a34f-e5a2e1c14c48"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 752,
+          "duration": 649,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
         },
         {
-          "uuid": "fa3aa41e-b76b-4808-afa3-1e9b9bf40136",
+          "uuid": "2d2fda77-ad67-486b-836b-646474c40bb3",
           "title": "TST-1100 Endpoint Response Model Schema Tests",
           "fullFile": "C:\\graphql-api-testframework\\test\\graphql.test.js",
           "file": "\\test\\graphql.test.js",
@@ -77,35 +77,35 @@
               "title": "TST-1101 EMS Verify ETH transactions response model schema",
               "fullTitle": "TST-1100 Endpoint Response Model Schema Tests TST-1101 EMS Verify ETH transactions response model schema",
               "timedOut": false,
-              "duration": 287,
+              "duration": 117,
               "state": "passed",
               "speed": "slow",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "// Test to verify the model schema of the Ethereum transactions response\n    const query = gql`\n      {\n         ethereum {\n             transactions {\n               count(success: false)\n             }\n           }\n      }\n    `;\n    try {\n      const data = await request(apiURL, query, null, {\n        'X-API-KEY': apiKey,\n        'Authorization': authorizationHeader,\n      });\n      console.log('Model schema:', JSON.stringify(data, null, 2));\n      // Assert that the data follows the expected model schema\n      expect(data).to.have.property('ethereum').to.be.an('object');\n      expect(data.ethereum).to.have.property('transactions').to.be.an('array');\n      expect(data.ethereum.transactions[0]).to.have.property('count').to.be.a('number');\n    } catch (error) {\n      console.error('Error in first request:', JSON.stringify(error, null, 2));\n      throw error; // Rethrow the error to indicate test failure\n    }",
+              "code": "// Test to verify the model schema of the Ethereum transactions response\n    const query = gql`\n      {\n         ethereum {\n             transactions {\n               count(success: false)\n             }\n           }\n      }\n    `;\n    try {\n      const data = await request(apiURL, query, null, {\n        'X-API-KEY': apiKey,\n        'Authorization': authorizationHeader,\n      });\n      console.log('Model schema:', JSON.stringify(data, null, 2));\n      // Assert that the data follows the expected model schema\n      expect(data).to.have.property('ethereum').to.be.an('object');\n      expect(data.ethereum).to.have.property('transactions').to.be.an('array');\n      expect(data.ethereum.transactions[0]).to.have.property('count').to.be.a('number');\n    } catch (error) {\n      console.error('Error:', JSON.stringify(error, null, 2));\n      throw error; // Rethrow the error to indicate test failure\n    }",
               "err": {},
-              "uuid": "dba83646-2feb-4125-a480-db548d690cdd",
-              "parentUUID": "fa3aa41e-b76b-4808-afa3-1e9b9bf40136",
+              "uuid": "d4b2d745-dc58-4d7c-bfbe-0e1d41433cba",
+              "parentUUID": "2d2fda77-ad67-486b-836b-646474c40bb3",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "dba83646-2feb-4125-a480-db548d690cdd"
+            "d4b2d745-dc58-4d7c-bfbe-0e1d41433cba"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 287,
+          "duration": 117,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
         },
         {
-          "uuid": "fe83f59d-caf3-4440-b217-494b12de3913",
+          "uuid": "d2db5a3d-e0f4-4d7d-bb34-3953c3748c28",
           "title": "TST-1200 Coin Data Retrieval Tests",
           "fullFile": "C:\\graphql-api-testframework\\test\\graphql.test.js",
           "file": "\\test\\graphql.test.js",
@@ -116,29 +116,29 @@
               "title": "TST-1201 CD Verify positive count of ETH failed transactions",
               "fullTitle": "TST-1200 Coin Data Retrieval Tests TST-1201 CD Verify positive count of ETH failed transactions",
               "timedOut": false,
-              "duration": 114,
+              "duration": 117,
               "state": "passed",
               "speed": "slow",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "// Test to retrieve the count of failed Ethereum transactions\n    const query = gql`\n      {\n         ethereum {\n             transactions {\n               count(success: false)\n             }\n           }\n      }\n    `;\n    try {\n      const data = await request(apiURL, query, null, {\n        'X-API-KEY': apiKey,\n        'Authorization': authorizationHeader,\n      });\n      // Extract count value from the first transaction\n      const transactions = data.ethereum.transactions;\n      const count = transactions.length > 0 ? transactions[0].count : undefined;\n      console.log('ETH failed transactions count:', count);\n      // Assert that count is a number and is greater than 0\n      expect(count).to.exist;\n      expect(count).to.be.a('number');\n      expect(count).to.be.gte(0);\n    } catch (error) {\n      console.error('Error in first request:', JSON.stringify(error, null, 2));\n      throw error; // Rethrow the error to indicate test failure\n    }",
+              "code": "// Test to retrieve the count of failed Ethereum transactions\n    const query = gql`\n      {\n         ethereum {\n             transactions {\n               count(success: false)\n             }\n           }\n      }\n    `;\n    try {\n      const data = await request(apiURL, query, null, {\n        'X-API-KEY': apiKey,\n        'Authorization': authorizationHeader,\n      });\n      // Extract count value from the first transaction\n      const transactions = data.ethereum.transactions;\n      const count = transactions.length > 0 ? transactions[0].count : undefined;\n      console.log('ETH failed transactions count:', count);\n      // Assert that count is a number and is greater than 0\n      expect(count).to.exist;\n      expect(count).to.be.a('number');\n      expect(count).to.be.gte(0);\n    } catch (error) {\n      console.error('Error:', JSON.stringify(error, null, 2));\n      throw error; // Rethrow the error to indicate test failure\n    }",
               "err": {},
-              "uuid": "8a1de982-ba20-45e4-8cfe-9df1e3f2baf9",
-              "parentUUID": "fe83f59d-caf3-4440-b217-494b12de3913",
+              "uuid": "afad792b-435e-4ac2-a4f3-40e673564995",
+              "parentUUID": "d2db5a3d-e0f4-4d7d-bb34-3953c3748c28",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "8a1de982-ba20-45e4-8cfe-9df1e3f2baf9"
+            "afad792b-435e-4ac2-a4f3-40e673564995"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 114,
+          "duration": 117,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000

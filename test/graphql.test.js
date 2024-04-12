@@ -13,7 +13,7 @@ const apiKey = apiCredentials.apiKey;
 const authorizationHeader = apiCredentials.authorizationHeader;
 
 describe('TST-1000 API Authorization Tests', function () { // Suite for testing API authorization
-  it('TST-1001 A Invalid API Key', async function () { // Test to verify authorization fails with an invalid API key
+  it('TST-1001 A Invalid API Key', async function () { // Test to verify authorization fails with an invalid API key (Test is meant to fail because im passing incorrect apiKey)
     const query = gql`
       {
         ethereum {
@@ -27,7 +27,7 @@ describe('TST-1000 API Authorization Tests', function () { // Suite for testing 
     try {
       const response = await axios.post(apiURL, { query }, {
         headers: {
-          'X-API-KEY': apiKey, // set auth key as invalid string
+          'X-API-KEY': "apiKey", // Set auth key as invalid string
           'Authorization': authorizationHeader,
           'Content-Type': 'application/json',
         },
@@ -81,7 +81,7 @@ describe('TST-1100 Endpoint Response Model Schema Tests', function () { // Test 
       expect(data.ethereum.transactions[0]).to.have.property('count').to.be.a('number');
 
     } catch (error) {
-      console.error('Error in first request:', JSON.stringify(error, null, 2));
+      console.error('Error:', JSON.stringify(error, null, 2));
       throw error; // Rethrow the error to indicate test failure
     }
 
@@ -117,7 +117,7 @@ describe('TST-1200 Coin Data Retrieval Tests', function () { // Test suite for r
       expect(count).to.be.a('number');
       expect(count).to.be.gte(0);
     } catch (error) {
-      console.error('Error in first request:', JSON.stringify(error, null, 2));
+      console.error('Error:', JSON.stringify(error, null, 2));
       throw error; // Rethrow the error to indicate test failure
     }
 
