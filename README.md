@@ -53,9 +53,8 @@ Once you have installed the dependencies and set up the project, you can run the
 ```bash
 npm test
 
-#################################################################################################################################
 
-Test Descriptions
+## Test Descriptions
 The test suite includes the following tests:
 
 1. API Authorization Tests: This suite tests the authorization process for the API.
