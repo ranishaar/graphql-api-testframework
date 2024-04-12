@@ -50,22 +50,15 @@ Before you begin, ensure you have the following installed on your local machine:
 
 Once you have installed the dependencies and set up the project, you can run the tests using the following command:
 
-```bash
-npm test
-
+   ```bash
+   npm test
+   ```
 
 ## Test Descriptions
-The test suite includes the following tests:
 
-1. API Authorization Tests: This suite tests the authorization process for the API.
+1. **API Authorization Tests**: 
+   
+   - This suite tests the authorization process for the API.
+   - Test 1: Verifies that authorization fails with an invalid API key.
 
-Test 1: Verifies that authorization fails with an invalid API key.
-
-2. Endpoint Response Model Schema Tests: This suite verifies the model schema of endpoint responses.
-
-Test 1: Verifies the model schema of Ethereum transactions response.
-
-3. Coin Data Retrieval Tests: This suite retrieves coin data and verifies it.
-
-Test 1: Verifies the count of failed Ethereum transactions.
 
