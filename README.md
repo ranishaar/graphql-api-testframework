@@ -55,6 +55,7 @@ Once you have installed the dependencies and set up the project, you can run the
    ```bash
    npm test
    ```
+Test results are logged in the terminal window and also in the mochawesome html report generated and found in mochawesome-report directory.
 
 ## Test Descriptions
 
