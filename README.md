@@ -10,24 +10,26 @@ Before you begin, ensure you have the following installed on your local machine:
 
 ## Setup
 
-1. **Install Node.js and npm**: 
+1. **Install Git**: If you haven't already, you need to install Git on your machine. You can download Git from the [official website](https://git-scm.com/).
+
+2. **Install Node.js and npm**: 
    
    - Download and install Node.js from the [official website](https://nodejs.org/).
    - npm is included with Node.js installation.
 
-2. **Clone the Repository**: Clone the repository containing the test code to your local machine:
+3. **Clone the Repository**: Clone the repository containing the test code to your local machine:
 
     ```bash
     git clone https://github.com/ranishaar/graphql-api-testframework.git
     ```
 
-3. **Navigate to the Project Directory**: Open a terminal or command prompt and navigate to the root directory of the cloned repository:
+4. **Navigate to the Project Directory**: Open a terminal or command prompt and navigate to the root directory of the cloned repository:
 
     ```bash
     cd graphql-api-testframework
     ```
 
-4. **Set Up Credentials File**: Create a file named `credentials.json` in the root directory of the project. This file should contain your API key and authorization header for the GraphQL API you are testing. Here's an example of how the `credentials.json` file should be structured:
+5. **Set Up Credentials File**: Create a file named `credentials.json` in the root directory of the project. This file should contain your API key and authorization header for the GraphQL API you are testing. Here's an example of how the `credentials.json` file should be structured:
 
     ```json
     {
@@ -38,7 +40,7 @@ Before you begin, ensure you have the following installed on your local machine:
 
     Replace `"YOUR_API_KEY_HERE"` with your actual API key and `"YOUR_AUTHORIZATION_HEADER_HERE"` with your authorization header.
 
-5. **Install Dependencies**: Install the required dependencies using npm:
+6. **Install Dependencies**: Install the required dependencies using npm:
 
     ```bash
     npm install chai axios fs graphql-request
