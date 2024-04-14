@@ -40,6 +40,14 @@ Before you begin, ensure you have the following installed on your local machine:
 
     Replace `"YOUR_API_KEY_HERE"` with your actual API key and `"YOUR_AUTHORIZATION_HEADER_HERE"` with your authorization header.
 
+    To obtain the API key and authorization header:
+    
+    - Go to the [GraphQL playground](https://ide.bitquery.io/).
+    - Create a free account or log in if you already have one.
+    - Select **API V1** to obtain correct credentials.
+    - Click on the `</>` button at the top right corner of the playground.
+    - You will find your API key and authorization header in the code snippet that appears.
+
 6. **Install Dependencies**: Install the required dependencies using npm:
 
     ```bash
