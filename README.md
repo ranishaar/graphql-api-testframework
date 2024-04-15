@@ -63,6 +63,15 @@ Once you have installed the dependencies and set up the project, you can run the
    ```bash
    npm test
    ```
+
+Ultimately, you can run individual test cases by using grep as follows:
+
+   ```bash
+   npm test -- -g TST-XXXX
+   ```
+Replace X values by the desired test case number to run which can be found in the `it` block of each test case.
+i.e. TST-1201
+
 Test results are logged in the terminal window and also in the mochawesome html report generated and found in mochawesome-report directory.
 
 ## Test Descriptions
